@@ -1,0 +1,22 @@
+Message -bay-gathering {
+  section.title {
+    a {
+      font-size: 2rem 
+    }  
+    input {
+      border: 1px solid gainsboro
+      width: 100%
+      font-size: 1em
+    }
+  }
+
+  section.content {
+  }
+
+  section.actions {
+    display: flex
+    flex-basis: 100%
+    justify-content: flex-end 
+  }
+}
+

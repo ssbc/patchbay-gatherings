@@ -46,6 +46,7 @@ exports.create = (api) => {
         h('.expand', { 'ev-click': () => isMini.set(false) }, '+'),
         h('.details', [
           title({obs, msg}),
+          description({obs, msg}),
           location({obs, msg}),
         ]),
         h('.date-splash',
@@ -65,7 +66,7 @@ exports.create = (api) => {
       ])
     ]
 
-    return [
+    return h('Message -bay-gathering-mini', [
       h('section.avatar', {}, api.about.html.avatar(msg.value.author)),
       h('section.timestamp', {}, timestamp(msg)),
       // h('header.author', {}, author(msg)),
@@ -75,6 +76,6 @@ exports.create = (api) => {
       h('section.raw-content', rawMessage),
       h('section.actions', {}, action(msg)),
       h('footer.backlinks', {}, backlinks(msg))
-    ]
+    ])
   }
 }
