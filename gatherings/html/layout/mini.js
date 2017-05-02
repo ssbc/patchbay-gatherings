@@ -15,7 +15,6 @@ exports.needs = nest({
   'about.obs.color': 'first',
   'blob.sync.url': 'first',
   'gathering.obs.gathering': 'first',
-  'gathering.obs.thumbnail': 'first',
   'gathering.html': {
     'description': 'first',
     'title': 'first',
@@ -35,8 +34,7 @@ exports.create = (api) => {
 
     const { title, location, description, startDateTime } = api.gathering.html
 
-    const thumbnail = api.gathering.obs.thumbnail({obs, msg})
-    const background = computed(thumbnail, (thumbnail) => `url(${thumbnail})`)
+    const background = computed(obs.thumbnail, (thumbnail) => `url(${thumbnail})`)
 
     const { author, timestamp, meta, action, backlinks } = api.message.html
     // if (!isMsg(msg.key)) action = () => {}
