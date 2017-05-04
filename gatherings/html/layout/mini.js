@@ -47,7 +47,7 @@ exports.create = (api) => {
         h('.details', [
           title({obs, msg}),
           description({obs, msg}),
-          location({obs, msg}),
+          location({obs, msg})
         ]),
         h('.date-splash',
           {
