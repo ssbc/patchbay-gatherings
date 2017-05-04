@@ -4,4 +4,4 @@ const modules = bulk(__dirname, ['!(node_modules|test.js|util|*.test.js)/**/*.js
   return module.match(/(.*.test.js$)/) ? null : require(module)
 }})
 
-module.exports = modules
+module.exports = {'patchbay-gatherings': modules}
