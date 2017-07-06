@@ -1,6 +1,7 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
-const { h, Array, map } = require('mutant')
+const { h, Array } = require('mutant')
+const Scroller = require('pull-scroll')
 
 exports.gives = nest({
   'app.html': {
@@ -38,17 +39,18 @@ exports.create = function (api) {
     if (path !== route) return
 
     const creator = api.gathering.html.create({})
-    const gatherings = Array([])
-    const content = h('section.content', {}, map(gatherings, api.gathering.html.render))
-    const { container } = api.app.html.scroller({content, prepend: [creator]}) 
+    const { container, content } = api.app.html.scroller({prepend: [creator]})
 
     pull(
-      api.gathering.pull.find(),
-      pull.drain(msg => gatherings.insert(msg, 0))
+      api.gathering.pull.find({reverse: true}),
+      Scroller(container, content, api.gathering.html.render, false, false)
+    )
+
+    pull(
+      api.gathering.pull.find({old: false}),
+      Scroller(container, content, api.gathering.html.render, true, false)
     )
 
     return container
   }
 }
-
-
