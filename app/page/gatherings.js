@@ -4,10 +4,8 @@ const { h, Array } = require('mutant')
 const Scroller = require('pull-scroll')
 
 exports.gives = nest({
-  'app.html': {
-    page: true,
-    menuItem: true
-  }
+  'app.html.menuItem': true,
+  'app.page.gatherings': true,
 })
 
 exports.needs = nest({
@@ -16,28 +14,23 @@ exports.needs = nest({
     create: 'first',
     render: 'first'
   },
-  'gathering.pull.find': 'first'
+  'gathering.pull.find': 'first',
 })
 
 exports.create = function (api) {
-  const route = '/gatherings'
   return nest({
-    'app.html': {
-      menuItem: menuItem,
-      page: gatheringsPage
-    }
+    'app.html.menuItem': menuItem,
+    'app.page.gatherings': gatheringsPage,
   })
 
   function menuItem (handleClick) {
     return h('a', {
       style: { order: 0 },
-      'ev-click': () => handleClick(route)
-    }, route)
+      'ev-click': () => handleClick({ page: 'gatherings' })
+    }, '/gatherings')
   }
 
   function gatheringsPage (path) {
-    if (path !== route) return
-
     const creator = api.gathering.html.create({})
     const { container, content } = api.app.html.scroller({prepend: [creator]})
 
