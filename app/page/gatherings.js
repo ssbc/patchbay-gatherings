@@ -44,6 +44,7 @@ exports.create = function (api) {
       Scroller(container, content, api.gathering.html.render, true, false)
     )
 
+    container.title = '/gatherings'
     return container
   }
 }
