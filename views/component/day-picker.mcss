@@ -1,0 +1,84 @@
+GatheringDayPicker {
+	background: #fff
+	padding: var(--boundary) 3rem
+	border-radius: var(--br)
+
+	div.month-picker {
+		color: #444
+		font-family: sans
+		font-size: 1.15rem
+
+		display: flex
+		justify-content: space-between
+		align-items: center
+
+		margin-bottom: 1rem
+
+		button {
+			color: var(--feature-color)
+			font-size: .8rem
+
+			background: none
+			border: none
+			cursor: pointer
+			font-size: 1.5rem
+      min-width: initial
+
+			:focus { outline: none }
+		}
+	}
+
+
+  div.Marama {
+    grid-template-rows: repeat(7, var(--tile-width)) !important
+
+    div.MaramaDayLabel {
+      font-size: 1rem
+    }
+
+    div.MaramaDayTile {
+      border-radius: 4rem
+      border: 1px solid hsla(0, 0%, 100%, 0)
+
+      -past {
+        cursor: not-allowed
+        background: none
+        color: hsl(0, 0%, 60%)
+
+        -events {
+          border: 1px solid hsl(0, 0%, 40%)
+
+          -attending {
+            background: hsl(0, 0%, 40%)
+            color: #fff
+          }
+        }
+      }
+
+      -future {
+        background: none
+        --color: hsla(320, 100%, 60%, 1)
+        /* deepskyblue */
+
+        -events {
+          border: 1px solid var(--color)
+          color: var(--color)
+
+          -attending {
+            background: var(--color)
+            color: #fff
+          }
+        }
+      }
+
+      -range {
+        background: deeppink
+
+        -future {
+          background: deepskyblue
+        }
+      }
+    }
+  }
+}
+

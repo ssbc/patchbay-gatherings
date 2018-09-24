@@ -1,0 +1,51 @@
+GatheringTimePicker {
+  color: #666
+  background: #fff
+  border-radius: var(--br)
+  margin: var(--boundary)
+
+  div.time-entry {
+    padding: calc(var(--boundary) / 2)
+
+    display: flex
+    justify-content: space-between
+
+    div.close { cursor: pointer }
+  }
+
+  div.add-more {
+    font-size: .9rem
+    position: relative
+
+    div.dropdown {
+      position: absolute
+      left: calc(var(--boundary) / 2)
+      right: calc(var(--boundary) / 2)
+      top: calc(var(--boundary) / 2)
+
+      background: #fff
+      max-height: 20vh
+      overflow-y: scroll
+      padding: calc(var(--boundary) / 2)
+
+      div.hour { color: #000 }
+      div {
+        padding: 2px
+
+        :hover {
+          background: var(--feature-color)
+          color: #fff
+        }
+      }
+    }
+
+    div.add {
+      color: var(--feature-color)
+      padding: calc(var(--boundary) / 2)
+      cursor: pointer
+
+      display: flex
+      justify-content: center
+    }
+  }
+}
