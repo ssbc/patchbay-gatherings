@@ -100,12 +100,6 @@ module.exports = function GatheringNew (opts) {
   }
 }
 
-// function getInitialClosesAt () {
-//   const d = new Date()
-
-//   return new Date(d.getFullYear(), d.getMonth(), d.getDate() + 3, 12)
-// }
-
 // helpers
 
 function getTimezone () {

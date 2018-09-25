@@ -1,26 +1,24 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
-const { h, Array } = require('mutant')
+const { h } = require('mutant')
 const Scroller = require('pull-scroll')
+// TODO replace with mutant-scroll ??
 
 exports.gives = nest({
   'app.html.menuItem': true,
-  'app.page.gatherings': true,
+  'app.page.gatherings': true
 })
 
 exports.needs = nest({
   'app.html.scroller': 'first',
-  'gathering.html': {
-    create: 'first',
-    render: 'first'
-  },
-  'gathering.pull.find': 'first',
+  'message.html.render': 'first',
+  'sbot.pull.stream': 'first'
 })
 
 exports.create = function (api) {
   return nest({
     'app.html.menuItem': menuItem,
-    'app.page.gatherings': gatheringsPage,
+    'app.page.gatherings': gatheringsPage
   })
 
   function menuItem (handleClick) {
@@ -31,17 +29,33 @@ exports.create = function (api) {
   }
 
   function gatheringsPage (path) {
-    const creator = api.gathering.html.create({})
-    const { container, content } = api.app.html.scroller({prepend: [creator]})
+    const creator = h('button', 'New Gathering') // TODO
+    const { container, content } = api.app.html.scroller({ prepend: [creator] })
+
+    // extract to scuttle-gathering?
+    const source = opts => api.sbot.pull.stream(server => {
+      const _opts = Object.assign({
+        query: [{
+          $filter: {
+            value: {
+              timestamp: { $gt: 0 },
+              content: { type: 'gathering' }
+            }
+          }
+        }]
+      }, opts)
+
+      return server.query.read(_opts)
+    })
 
     pull(
-      api.gathering.pull.find({reverse: true}),
-      Scroller(container, content, api.gathering.html.render, false, false)
+      source({ reverse: true }),
+      Scroller(container, content, api.message.html.render, false, false)
     )
 
     pull(
-      api.gathering.pull.find({old: false}),
-      Scroller(container, content, api.gathering.html.render, true, false)
+      source({ old: false }),
+      Scroller(container, content, api.message.html.render, true, false)
     )
 
     container.title = '/gatherings'
