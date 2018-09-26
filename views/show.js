@@ -9,8 +9,8 @@ module.exports = function GatheringShow (opts) {
     scuttle,
     avatar = i => h('div', i),
     blobUrl = i => i,
-    markdown = i => i
-    // onEdit
+    markdown = i => i,
+    editBtn
   } = opts
 
   const state = Value()
@@ -51,7 +51,8 @@ module.exports = function GatheringShow (opts) {
         // h('label', 'Attendees'),
         h('div.attendees', attendees.map(avatar)),
         AttendBtn(isAttendee, attendees)
-      ])
+      ]),
+      editBtn ? editBtn : null
     ]
   }))
 

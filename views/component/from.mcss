@@ -1,4 +1,4 @@
-GatheringNew {
+GatheringForm {
   --br: 5px
   --boundary: 1rem
   --feature-color: hsla(295, 67%, 60%, 1)

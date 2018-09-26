@@ -20,16 +20,18 @@ function NewTimeEntry (time, active) {
 
   const el = h('div.add-more', [
     when(active,
-      h('div.dropdown', options.map((t, i) => {
-        return h('div',
-          {
-            'ev-click': () => select(t),
-            className: t.getMinutes() === 0 ? 'hour' : '',
-            attributes: { 'data-time': dataId(t) }
-          },
-          printTime(t)
-        )
-      }))
+      h('div.dropdown',
+        options.map((t, i) => {
+          return h('div',
+            {
+              'ev-click': () => select(t),
+              className: t.getMinutes() === 0 ? 'hour' : '',
+              attributes: { 'data-time': dataId(t) }
+            },
+            printTime(t)
+          )
+        })
+      )
     )
   ])
 
@@ -40,7 +42,9 @@ function NewTimeEntry (time, active) {
   function onActivate (active) {
     if (!active) return
 
-    const target = el.querySelector(`[data-time='${dataId(resolve(time))}']`)
+    const id = dataId(resolve(time))
+    const target = el.querySelector(`[data-time='${id}']`)
+    if (!target) return
     target.parentNode.scrollTop = target.offsetTop - target.parentNode.offsetTop + 4
   }
 
@@ -58,5 +62,5 @@ function TimeEntry (t, active) {
 }
 
 function dataId (t) {
-  return printTime(t)
+  return `${t.getHours()}.${Math.floor(t.getMinutes() / 15)}`
 }

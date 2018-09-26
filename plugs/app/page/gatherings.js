@@ -3,7 +3,7 @@ const pull = require('pull-stream')
 const { h, Value } = require('mutant')
 const Scroller = require('pull-scroll') // TODO replace with mutant-scroll ??
 const Scuttle = require('scuttle-gathering')
-const NewGathering = require('../../../views/new')
+const GatheringNew = require('../../../views/new')
 
 exports.gives = nest({
   'app.html.menuItem': true,
@@ -34,7 +34,7 @@ exports.create = function (api) {
 
   function gatheringsPage (path) {
     const isOpen = Value(false)
-    const form = NewGathering({
+    const form = GatheringNew({
       scuttle: Scuttle(api.sbot.obs.connection),
       onCancel: () => isOpen.set(false),
       afterPublish: (msg) => {
