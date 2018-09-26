@@ -15,7 +15,9 @@ const view = View({
   },
   initialState: {
     title: 'Ziva\'s 1st Birthday',
-    date: new Date(2018, 9, 21, 15)
+    startDateTime: {
+      epoch: Date.now() + 5000
+    }
   }
 })
 

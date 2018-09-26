@@ -22,24 +22,12 @@ module.exports = function GatheringNew (opts) {
 
   return h('GatheringNew', [
     h('div.details', [
-      h('label', 'Title'),
-      h('input', {
+      h('label.title', 'Title'),
+      h('input.title', {
         'ev-input': ev => state.title.set(ev.target.value),
         value: state.title
       }),
-      h('label', 'Description'),
-      h('textarea', {
-        'ev-input': ev => state.description.set(ev.target.value),
-        value: state.description,
-        placeholder: '(optional)'
-      }),
-      h('label', 'Location'),
-      h('input', {
-        'ev-input': ev => state.location.set(ev.target.value),
-        value: state.location,
-        placeholder: '(optional)'
-      }),
-      h('label', 'Time'),
+      h('label.time', 'Time'),
       h('div.time-input', [
         DayPicker(state),
         h('div.time-picker', [
@@ -52,7 +40,19 @@ module.exports = function GatheringNew (opts) {
             ])
           ])
         ])
-      ])
+      ]),
+      h('label.location', 'Location'),
+      h('input.location', {
+        'ev-input': ev => state.location.set(ev.target.value),
+        value: state.location,
+        placeholder: '(optional)'
+      }),
+      h('label.description', 'Description'),
+      h('textarea', {
+        'ev-input': ev => state.description.set(ev.target.value),
+        value: state.description,
+        placeholder: '(optional)'
+      })
       // h('label', 'Image'),
       // // upload + preview image...
     ]),
@@ -95,12 +95,13 @@ function initialiseState (initialState) {
   const state = Struct(emptyState())
   if (!initialState) return state
 
-  const { title, description, location, date } = initialState
+  const { title, description, location, startDateTime } = initialState
 
   if (title) state.title.set(title)
   if (description) state.title.set(description)
   if (location) state.title.set(location)
-  if (date) {
+  if (startDateTime && startDateTime.epoch) {
+    const date = new Date(startDateTime.epoch)
     state.monthIndex.set(date.getMonth())
     state.day.set(date)
     state.time.set(date)

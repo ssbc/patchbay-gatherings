@@ -36,6 +36,9 @@ GatheringNew {
     align-items: center
 
     label {
+      align-self: start
+      margin-top: .5rem
+
       color: #fff
       font-size: .9rem
       filter: drop-shadow(0 0 2px hsla(0,100%,0%,0.1))
@@ -50,6 +53,14 @@ GatheringNew {
       padding: .5rem
       border: none
       outline: none
+    }
+
+    input.location {
+      width: 30rem
+    }
+
+    textarea {
+      min-height: 3rem
     }
 
     div.time-input {
