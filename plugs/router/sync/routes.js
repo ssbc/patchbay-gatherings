@@ -3,7 +3,7 @@ const nest = require('depnest')
 exports.gives = nest('router.sync.routes')
 
 exports.needs = nest({
-  'app.page.gatherings': 'first',
+  'app.page.gatherings': 'first'
 })
 
 exports.create = (api) => {
@@ -12,10 +12,9 @@ exports.create = (api) => {
 
     // loc = location
     const routes = [
-      [ loc => loc.page === 'gatherings', pages.gatherings ],
+      [ loc => loc.page === 'gatherings', pages.gatherings ]
     ]
 
     return [...routes, ...sofar]
   })
 }
-

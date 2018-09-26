@@ -4,7 +4,8 @@
   "description": "Plugs patch-gatherings into patchbay",
   "main": "plugs/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"see views folder for *.test.js files\" && exit 1",
+    "lint": "standard --fix"
   },
   "repository": {
     "type": "git",
@@ -35,7 +36,7 @@
     "pull-scroll": "^1.0.8",
     "pull-stream": "^3.5.0",
     "read-directory": "^2.0.0",
-    "scuttle-gathering": "^1.1.1",
+    "scuttle-gathering": "^1.1.5",
     "spacetime": "^4.4.0"
   },
   "devDependencies": {

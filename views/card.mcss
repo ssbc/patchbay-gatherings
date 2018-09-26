@@ -1,0 +1,44 @@
+GatheringCard {
+  cursor: pointer
+
+  (img) {
+    max-width: 100%
+  }
+
+  display: grid
+  grid-template-columns: auto auto
+
+  color: initial 
+  :hover { text-decoration: none }
+
+  div.details {
+    border: 1px gainsboro solid
+    border-right: none
+    padding: 1rem
+
+    h2 {
+      font-size: 1.8rem
+      margin-top: 0
+    }
+    div.description {
+    }
+  }
+
+  div.date-splash {
+    min-width: 20rem
+    min-height: 14rem
+    background-size: cover 
+    background-position: center
+
+    display: flex
+    align-items: center
+    justify-content: center
+
+    div {
+      color: #fff
+      font-weight: 600
+      font-size: 3rem
+      text-shadow: rgba(0, 0, 0, 0.46) 0 0 10px
+    }
+  }
+}

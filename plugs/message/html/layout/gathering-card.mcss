@@ -50,59 +50,6 @@ Message -gathering-card {
 
     margin-bottom: .5rem
 
-    (img) {
-      max-width: 100%
-    }
-
-    display: grid
-    grid-template-columns: auto auto
-
-    color: initial 
-    :hover { text-decoration: none }
-
-    div.details {
-      border: 1px gainsboro solid
-      border-right: none
-      padding: 1rem
-
-      h2 {
-        font-size: 1.8rem
-        margin-top: 0
-      }
-      div.description {
-      }
-    }
-
-    div.date-splash {
-      min-width: 20rem
-      min-height: 14rem
-      background-size: cover 
-      background-position: center
-
-      display: flex
-      align-items: center
-      justify-content: center
-
-      div {
-        color: #fff
-        font-weight: 600
-        font-size: 3rem
-        text-shadow: rgba(0, 0, 0, 0.46) 0 0 10px
-      }
-    }
-
-    div.toggle-layout {
-      position: absolute
-      top: 3.0rem
-      right: 1rem
-      border: none
-      border-radius: 0
-      background-color: rgba(255,255,255,0.2)
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      line-height: .8rem
-    }
   }
 
   section.raw-content {

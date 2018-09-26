@@ -1,14 +1,14 @@
 const plugs = {
   app: {
     page: {
-      // gathering: require('./app/page/gathering'),
       gatherings: require('./app/page/gatherings')
     }
   },
   message: {
     html: {
       layout: {
-        'gathering-card': require('./message/html/layout/gathering-card')
+        'gathering-card': require('./message/html/layout/gathering-card'),
+        'gathering-show': require('./message/html/layout/gathering-show')
       },
       render: {
         gathering: require('./message/html/render/gathering')

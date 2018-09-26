@@ -19,8 +19,9 @@ exports.create = function (api) {
   function renderGathering (msg, { pageId } = {}) {
     if (!isGathering(msg)) return
 
+    const layout = pageId ? 'show' : 'card'
     const element = h('div', { attributes: { tabindex: '0' } },
-      api.message.html.layout(msg, { layout: 'card' })
+      api.message.html.layout(msg, { layout })
     )
 
     return api.message.html.decorate(element, { msg })

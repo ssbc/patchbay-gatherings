@@ -1,6 +1,8 @@
 const { h, Struct, Value, when, computed, resolve } = require('mutant')
 const DayPicker = require('./component/day-picker')
 const TimePicker = require('./component/time-picker')
+const getTimezone = require('../lib/get-timezone')
+const getTimezoneOffset = require('../lib/get-timezone-offset')
 
 module.exports = function GatheringNew (opts) {
   const {
@@ -98,19 +100,4 @@ module.exports = function GatheringNew (opts) {
       afterPublish(data)
     })
   }
-}
-
-// helpers
-
-function getTimezone () {
-  try {
-    return Intl.DateTimeFormat().resolvedOptions().timeZone
-  } catch (e) {
-    return undefined
-  }
-}
-
-function getTimezoneOffset () {
-  const offset = new Date().getTimezoneOffset() / -60
-  return offset > 0 ? `+${offset}` : offset
 }
