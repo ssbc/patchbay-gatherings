@@ -1,4 +1,4 @@
-const { h, Struct, Value, when, computed, resolve } = require('mutant')
+const { h, Struct, when, computed, resolve } = require('mutant')
 const DayPicker = require('./component/day-picker')
 const TimePicker = require('./component/time-picker')
 const getTimezone = require('../lib/get-timezone')
@@ -6,7 +6,7 @@ const getTimezoneOffset = require('../lib/get-timezone-offset')
 
 module.exports = function GatheringNew (opts) {
   const {
-    // initialState,
+    initialState,
     scuttle,
     // suggest,
     // avatar,
@@ -14,22 +14,11 @@ module.exports = function GatheringNew (opts) {
     onCancel = () => {}
   } = opts
 
-  const now = new Date()
-  const state = Struct({
-    title: '',
-    description: '',
-    location: '',
-    monthIndex: now.getMonth(),
-    day: null,
-    time: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
-    image: Value()
-  })
+  var state = initialiseState(initialState)
 
   const isValid = computed(state, ({ title, day, time }) => {
     return title && day && time
   })
-
-  // loadInitialState(initialState, state) // TODO
 
   return h('GatheringNew', [
     h('div.details', [
@@ -96,8 +85,39 @@ module.exports = function GatheringNew (opts) {
     scuttle.post(opts, (err, data) => {
       if (err) return console.error(err)
 
-      // state.set(initialState)
+      state.set(emptyState())
       afterPublish(data)
     })
+  }
+}
+
+function initialiseState (initialState) {
+  const state = Struct(emptyState())
+  if (!initialState) return state
+
+  const { title, description, location, date } = initialState
+
+  if (title) state.title.set(title)
+  if (description) state.title.set(description)
+  if (location) state.title.set(location)
+  if (date) {
+    state.monthIndex.set(date.getMonth())
+    state.day.set(date)
+    state.time.set(date)
+  }
+
+  return state
+}
+
+function emptyState () {
+  const now = new Date()
+  return {
+    title: '',
+    description: '',
+    location: '',
+    monthIndex: now.getMonth(),
+    day: false,
+    time: new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14),
+    image: null
   }
 }

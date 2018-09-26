@@ -103,5 +103,7 @@ GatheringNew {
   div.actions {
     justify-self: end
     margin-top: 2rem
+
+    display: flex
   }
 }

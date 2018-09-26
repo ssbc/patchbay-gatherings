@@ -12,6 +12,10 @@ const view = View({
       console.log('publishing', opts)
       cb(null, opts)
     }
+  },
+  initialState: {
+    title: 'Ziva\'s 1st Birthday',
+    date: new Date(2018, 9, 21, 15)
   }
 })
 

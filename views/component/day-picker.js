@@ -14,7 +14,7 @@ module.exports = function DayPicker (state) {
     computed(state, ({ monthIndex, day }) => {
       return Marama({
         monthIndex,
-        events: day ? [day] : [],
+        events: day ? [Event(day)] : [],
         onSelect,
         styles: {
           weekFormat: 'rows',
@@ -37,7 +37,7 @@ module.exports = function DayPicker (state) {
     else clearDay()
 
     function addEmptyEvent () {
-      state.day.set(Event(gte))
+      state.day.set(gte)
     }
     function clearDay () {
       state.day.set()
