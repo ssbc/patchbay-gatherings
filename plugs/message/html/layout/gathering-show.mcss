@@ -8,7 +8,26 @@ Message -gathering-show {
 
       padding: 3rem 2rem
 
-      div.GatheringNew {}
+    }
+  }
+
+  div.GatheringShow {
+    section.about {
+      div.edit {
+        i {
+          color: #999
+          cursor: pointer
+          padding: .5rem
+          border: 1px solid #ccc
+          border-radius: 4px
+
+          :hover {
+            color: #fff
+            background: hsla(170, 80%, 60%, 1)
+            border: 1px solid hsla(170, 80%, 60%, 1)
+          }
+        }
+      }
     }
   }
 }

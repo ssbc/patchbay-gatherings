@@ -26,16 +26,27 @@ GatheringShow {
 
     display: grid
     align-content: start
-    grid-gap: 1rem
+    /* grid-gap: 1rem */
 
     h1 {
       font-family: arial, sans
       font-size: 2rem
-      margin: 1rem 1rem 0 1rem
+      margin: 1rem 1rem 1rem 1rem
     }
 
     div.description {
-      margin: 0 1rem 1rem 1rem
+      margin: 0 1rem 0 1rem
+    }
+
+    div.edit {
+      justify-self: end
+      margin-right: 1rem
+    }
+
+    div {
+      :last-child {
+        margin-bottom: 1rem
+      }
     }
   }
 

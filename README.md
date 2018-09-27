@@ -1,22 +1,5 @@
 > Plugs [patch-gatherings]() into [patchbay]() 
 
-`gives` Patchbay style views of patch-gatherings 
-
-## Needs
-```js
-exports.needs = nest({
-  'app.html.tabs': 'first' //provides a default if not given
-})
-```
-
-## Gives
-```js
-exports.gives = nest({
-  'gatherings.html': ['layout']
-})
-```
-
-
 ## Install
 
 With [npm](https://npmjs.org/) installed, run
@@ -24,6 +7,8 @@ With [npm](https://npmjs.org/) installed, run
 ```
 $ npm install patchbay-gatherings
 ```
+
+See patchbay for how `patchbay-*` modules are combined into patchbay
 
 ## Code of conduct
 Please note that this project is released with a [Contributor Code of Conduct](code-of-conduct.md). By participating in this project you agree to abide by its terms.  
@@ -38,4 +23,4 @@ Please note that this project is released with a [Contributor Code of Conduct](c
 
 ## License
 
-ISC
+AGPL-3.0

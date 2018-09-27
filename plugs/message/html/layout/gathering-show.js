@@ -11,6 +11,7 @@ exports.needs = nest({
   'app.sync.goTo': 'first',
   'app.html.modal': 'first',
   'about.html.avatar': 'first',
+  'about.pull.updates': 'first',
   'message.html.backlinks': 'first',
   'message.html.markdown': 'first',
   'message.html.timestamp': 'first',
@@ -36,15 +37,16 @@ exports.create = (api) => {
       }
     })
     const modal = api.app.html.modal(form, { isOpen })
-    const editBtn = h('button', { 'ev-click': () => isOpen.set(true) }, 'Edit')
+    const editBtn = h('i.fa.fa-pencil', { 'ev-click': () => isOpen.set(true) })
 
     const show = Show({
       gathering: msg,
       scuttle: Scuttle(api.sbot.obs.connection),
       blobUrl: api.blob.sync.url,
       markdown: api.message.html.markdown,
-      avatar: api.about.html.avatar,
-      editBtn
+      avatar: id => api.about.html.avatar(id),
+      editBtn,
+      updateStream: api.about.pull.updates(msg.key)
     })
 
     return h('Message -gathering-show', [

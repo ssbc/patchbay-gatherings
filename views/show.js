@@ -1,5 +1,6 @@
 const { h, Value, computed } = require('mutant')
 const spacetime = require('spacetime')
+const pull = require('pull-stream')
 const getTimezone = require('../lib/get-timezone')
 const getTimezoneOffset = require('../lib/get-timezone-offset')
 
@@ -10,19 +11,15 @@ module.exports = function GatheringShow (opts) {
     avatar = i => h('div', i),
     blobUrl = i => i,
     markdown = i => i,
-    editBtn
+    editBtn,
+    updateStream
   } = opts
 
   const state = Value()
   const isPublishing = Value(false)
   refreshState()
 
-  // TODO
-  // - attend button
-  //    - need my key, or a new iAmAttending in scuttle.get
-  //    - publishing disable button
-  // - edit button
-  // - live update stream / obs?
+  if (updateStream) pull(updateStream, pull.drain(refreshState))
 
   return h('GatheringShow', computed(state, state => {
     if (!state) return h('div.loading', 'Loading...')
@@ -41,7 +38,8 @@ module.exports = function GatheringShow (opts) {
       Banner(image),
       h('section.about', [
         h('h1', title),
-        h('div.description', markdown(description))
+        h('div.description', markdown(description)),
+        editBtn ? h('div.edit', editBtn) : null
       ]),
       h('section.spacetime', [
         startDateTime && startDateTime.epoch ? [ h('label', 'time'), Time(new Date(startDateTime.epoch)) ] : null,
@@ -51,8 +49,7 @@ module.exports = function GatheringShow (opts) {
         // h('label', 'Attendees'),
         h('div.attendees', attendees.map(avatar)),
         AttendBtn(isAttendee, attendees)
-      ]),
-      editBtn ? editBtn : null
+      ])
     ]
   }))
 
