@@ -1,9 +1,7 @@
 const nest = require('depnest')
 const pull = require('pull-stream')
-const { h, Value } = require('mutant')
+const { h } = require('mutant')
 const Scroller = require('pull-scroll') // TODO replace with mutant-scroll ??
-const Scuttle = require('scuttle-gathering')
-const GatheringNew = require('../../../views/new')
 
 exports.gives = nest({
   'app.html.menuItem': true,
@@ -12,10 +10,8 @@ exports.gives = nest({
 
 exports.needs = nest({
   'app.html.scroller': 'first',
-  'app.html.modal': 'first',
-  'app.sync.goTo': 'first',
+  'gathering.html.button': 'first',
   'message.html.render': 'first',
-  'sbot.obs.connection': 'first',
   'sbot.pull.stream': 'first'
 })
 
@@ -33,19 +29,9 @@ exports.create = function (api) {
   }
 
   function gatheringsPage (path) {
-    const isOpen = Value(false)
-    const form = GatheringNew({
-      scuttle: Scuttle(api.sbot.obs.connection),
-      onCancel: () => isOpen.set(false),
-      afterPublish: (msg) => {
-        isOpen.set(false)
-        api.app.sync.goTo(msg)
-      }
+    const { container, content } = api.app.html.scroller({
+      prepend: [api.gathering.html.button()]
     })
-
-    const modal = api.app.html.modal(form, { isOpen })
-    const button = h('button', { 'ev-click': () => isOpen.set(true) }, 'New Gathering')
-    const { container, content } = api.app.html.scroller({ prepend: [button, modal] })
 
     // extract to scuttle-gathering?
     const source = opts => api.sbot.pull.stream(server => {

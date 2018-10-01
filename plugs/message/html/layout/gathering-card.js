@@ -11,6 +11,7 @@ exports.needs = nest({
   'about.obs.color': 'first',
   'app.sync.goTo': 'first',
   'message.html.action': 'map',
+  // 'message.html.meta': 'first',
   'message.html.markdown': 'first',
   'message.html.timestamp': 'first',
   'blob.sync.url': 'first',

@@ -4,6 +4,14 @@ const plugs = {
       gatherings: require('./app/page/gatherings')
     }
   },
+  gathering: {
+    html: {
+      button: require('./gathering/html/button')
+    },
+    sync: {
+      launchModal: require('./gathering/sync/launch-modal')
+    }
+  },
   message: {
     html: {
       layout: {
