@@ -22,7 +22,7 @@ module.exports = function GatheringNew (opts) {
   })
 
   function publish () {
-    const { title, description, location, day, time, progenitor } = resolve(state)
+    const { title, description, location, day, time, progenitor, mentions } = resolve(state)
 
     day.setHours(time.getHours())
     day.setMinutes(time.getMinutes())
@@ -37,6 +37,7 @@ module.exports = function GatheringNew (opts) {
     if (description) opts.description = description
     if (location) opts.location = location
     if (progenitor) opts.progenitor = progenitor
+    if (mentions) opts.mentions = mentions
 
     scuttle.post(opts, (err, data) => {
       if (err) return console.error(err)
