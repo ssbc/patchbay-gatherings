@@ -1,12 +1,15 @@
 const { resolve } = require('mutant')
+const isEqual = require('lodash.isequal')
 const getTimezone = require('../lib/get-timezone')
 const { initialiseState, buildState } = require('../lib/form-state')
 const Form = require('./component/form')
 
-module.exports = function GatheringNew (opts) {
+module.exports = function GatheringEdit (opts) {
   const {
     gathering,
     scuttle,
+    scuttleBlob,
+    blobUrl,
     // suggest,
     // avatar,
     afterPublish = console.log,
@@ -22,7 +25,9 @@ module.exports = function GatheringNew (opts) {
   return Form({
     state: state.next,
     onCancel,
-    publish
+    publish,
+    scuttleBlob,
+    blobUrl
   })
 
   function fetchCurrentState () {
@@ -42,6 +47,7 @@ module.exports = function GatheringNew (opts) {
     if (n.title !== c.title) opts.title = n.title
     if (n.location !== c.location) opts.location = n.location
     if (n.description !== c.description) opts.description = n.description
+    if (!isEqual(n.image, c.image)) opts.image = n.image
 
     n.day.setHours(n.time.getHours())
     n.day.setMinutes(n.time.getMinutes())
@@ -53,6 +59,8 @@ module.exports = function GatheringNew (opts) {
         tz: getTimezone()
       }
     }
+
+    if (!Object.keys(opts).length) return
 
     scuttle.put(gathering.key, opts, (err, data) => {
       if (err) return console.error(err)

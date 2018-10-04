@@ -7,6 +7,8 @@ module.exports = function GatheringNew (opts) {
   const {
     initialState,
     scuttle,
+    scuttleBlob,
+    blobUrl,
     // suggest,
     // avatar,
     afterPublish = console.log,
@@ -18,11 +20,13 @@ module.exports = function GatheringNew (opts) {
   return Form({
     state,
     onCancel,
-    publish
+    publish,
+    scuttleBlob,
+    blobUrl
   })
 
   function publish () {
-    const { title, description, location, day, time, progenitor, mentions } = resolve(state)
+    const { title, description, location, image, day, time, progenitor, mentions } = resolve(state)
 
     day.setHours(time.getHours())
     day.setMinutes(time.getMinutes())
@@ -36,6 +40,7 @@ module.exports = function GatheringNew (opts) {
 
     if (description) opts.description = description
     if (location) opts.location = location
+    if (image) opts.image = image
     if (progenitor) opts.progenitor = progenitor
     if (mentions) opts.mentions = mentions
 

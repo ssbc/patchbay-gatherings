@@ -1,6 +1,7 @@
 const nest = require('depnest')
 const { Value } = require('mutant')
 const Scuttle = require('scuttle-gathering')
+const ScuttleBlob = require('scuttle-blob')
 const GatheringNew = require('../../../views/new')
 
 exports.gives = nest({
@@ -10,6 +11,7 @@ exports.gives = nest({
 exports.needs = nest({
   'app.html.modal': 'first',
   'app.sync.goTo': 'first',
+  'blob.sync.url': 'first',
   'sbot.obs.connection': 'first'
 })
 
@@ -26,6 +28,8 @@ exports.create = function (api) {
     const form = GatheringNew({
       initialState,
       scuttle: Scuttle(api.sbot.obs.connection),
+      scuttleBlob: ScuttleBlob(api.sbot.obs.connection),
+      blobUrl: api.blob.sync.url,
       onCancel: () => isOpen.set(false),
       afterPublish: (msg) => {
         isOpen.set(false)

@@ -8,7 +8,9 @@ module.exports = function GatheringForm (opts) {
   const {
     state,
     onCancel,
-    publish
+    publish,
+    scuttleBlob,
+    blobUrl
   } = opts
 
   const isValid = computed(state, ({ title, day, time }) => {
@@ -47,9 +49,15 @@ module.exports = function GatheringForm (opts) {
         'ev-input': ev => state.description.set(ev.target.value),
         value: state.description,
         placeholder: '(optional)'
-      })
-      // h('label', 'Image'),
-      // // upload + preview image...
+      }),
+      h('label', 'Image'),
+      h('div.image-input', [
+        imageInput(),
+        computed(state.image, image => {
+          if (!image) return
+          return h('img', { src: blobUrl(image.link) })
+        })
+      ])
     ]),
     h('div.actions', [
       h('button -subtle', { 'ev-click': onCancel }, 'Cancel'),
@@ -60,4 +68,29 @@ module.exports = function GatheringForm (opts) {
       }, 'Publish')
     ])
   ])
+
+  function imageInput () {
+    return h('input', {
+      type: 'file',
+      accept: 'image/*',
+      'ev-change': handleFiles
+    })
+
+    function handleFiles (ev) {
+      const files = ev.target.files
+      const opts = {
+        stripExif: true
+        // isPrivate: computed(state.recps => Boolean(recps.length))
+      }
+      scuttleBlob.async.files(files, opts, (err, result) => {
+        ev.target.value = ''
+        if (err) {
+          console.error(err)
+          return
+        }
+
+        state.image.set(result)
+      })
+    }
+  }
 }

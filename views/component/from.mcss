@@ -109,6 +109,18 @@ GatheringForm {
         }
       }
     }
+
+    div.image-input {
+      display: grid
+      grid: 8rem / 16rem auto
+      align-items: start
+      grid-gap: 1rem
+
+      img {
+        max-height: 100%
+        max-width: 100%
+      }
+    }
   }
 
   div.actions {

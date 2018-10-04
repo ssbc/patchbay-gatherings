@@ -2,6 +2,7 @@ const nest = require('depnest')
 const { h, Value } = require('mutant')
 const { isGathering } = require('ssb-gathering-schema')
 const Scuttle = require('scuttle-gathering')
+const ScuttleBlob = require('scuttle-blob')
 const Show = require('../../../../views/show')
 const Edit = require('../../../../views/edit')
 
@@ -31,6 +32,8 @@ exports.create = (api) => {
     const form = Edit({
       gathering: msg,
       scuttle: Scuttle(api.sbot.obs.connection),
+      scuttleBlob: ScuttleBlob(api.sbot.obs.connection),
+      blobUrl: api.blob.sync.url,
       onCancel: () => isOpen.set(false),
       afterPublish: (msg) => {
         isOpen.set(false)
