@@ -113,13 +113,24 @@ GatheringShow {
 
     label {}
 
-    div.attendees {
+    div.attendanceButtons{
+      button{
+        display: inline-block
+        margin: 0 5px 5px 0
+      }
+    }
+
+    div.attendees, div.notAttendees{
       display: flex
       flex-wrap: wrap
 
       a, div {
         margin: 0 5px 5px 0
       }
+    }
+    
+    div.notAttendees {
+      opacity: 0.3
     }
 
     button {}
