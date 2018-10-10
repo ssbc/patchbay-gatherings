@@ -8,9 +8,10 @@ module.exports = function GatheringNew (opts) {
     initialState,
     scuttle,
     scuttleBlob,
+    myKey,
     blobUrl,
-    // suggest,
-    // avatar,
+    avatar,
+    suggest,
     afterPublish = console.log,
     onCancel = () => {}
   } = opts
@@ -19,14 +20,17 @@ module.exports = function GatheringNew (opts) {
 
   return Form({
     state,
+    myKey,
     onCancel,
     publish,
     scuttleBlob,
-    blobUrl
+    blobUrl,
+    avatar,
+    suggest
   })
 
   function publish () {
-    const { title, description, location, image, day, time, progenitor, mentions } = resolve(state)
+    const { title, description, location, image, day, time, progenitor, mentions, recps } = resolve(state)
 
     day.setHours(time.getHours())
     day.setMinutes(time.getMinutes())
@@ -42,7 +46,15 @@ module.exports = function GatheringNew (opts) {
     if (location) opts.location = location
     if (image) opts.image = image
     if (progenitor) opts.progenitor = progenitor
-    if (mentions) opts.mentions = mentions
+
+    if (recps && recps.length) {
+      opts.recps = [ myKey, ...recps.map(e => e.link ? e.link : e) ]
+    }
+    if (mentions && mentions.length) {
+      if (!opts.recps) opts.mentions = mentions
+      else opts.mentions = mentions.filter(e => !opts.recps.includes(e.link))
+      // dedup recps and mentions
+    }
 
     scuttle.post(opts, (err, data) => {
       if (err) return console.error(err)

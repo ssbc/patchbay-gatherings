@@ -1,0 +1,63 @@
+$GatheringRecpsBackground {
+  background-color: rgba(255,255,255, .3)
+  color: #fff
+}
+
+$GatheringRecpCard {
+  background-color: #fff
+  color: #222
+}
+
+GatheringRecipients {
+  $GatheringRecpsBackground
+  min-height: 3.5rem
+  padding-left: .5rem
+
+  /* border: 1px solid gainsboro */
+
+  display: flex
+  flex-wrap: wrap
+  align-items: center
+
+  div.recp {
+    $GatheringRecpCard
+    height: 2.5rem
+    margin: .5rem 1rem .5rem 0
+
+    display: flex
+    align-items: center
+    
+    a {
+      img.Avatar { 
+      }
+    }
+
+    div.name {
+      margin: 0 1rem 0 .5rem
+    }
+  }
+
+  input.hidden {
+    flex-basis: 3rem
+    flex-grow: 1
+
+    min-width: 3rem
+    min-height: 3rem
+    height: 100%
+
+    color: #fff
+    font-size: .9rem
+
+    border: none
+    outline: none
+    box-shadow: none
+    background: none
+
+    ::placeholder {
+      color: #fff
+    }
+  }
+}
+
+
+

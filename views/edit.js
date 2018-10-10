@@ -27,7 +27,8 @@ module.exports = function GatheringEdit (opts) {
     onCancel,
     publish,
     scuttleBlob,
-    blobUrl
+    blobUrl,
+    isEditing: true
   })
 
   function fetchCurrentState () {
@@ -61,6 +62,10 @@ module.exports = function GatheringEdit (opts) {
     }
 
     if (!Object.keys(opts).length) return
+
+    // send an update alert to everyone who's already said they're going
+    if (c.attendees && c.attendees.length) opts.mentions = c.attendees
+    // TODO ? move this up into scuttle-gathering#put
 
     scuttle.put(gathering.key, opts, (err, data) => {
       if (err) return console.error(err)
