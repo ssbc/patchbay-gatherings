@@ -17,7 +17,8 @@ exports.needs = nest({
   'message.html.markdown': 'first',
   'message.html.timestamp': 'first',
   'blob.sync.url': 'first',
-  'sbot.obs.connection': 'first'
+  'sbot.obs.connection': 'first',
+  'keys.sync.id': 'first'
 })
 
 exports.create = (api) => {
@@ -43,6 +44,7 @@ exports.create = (api) => {
     const editBtn = h('i.fa.fa-pencil', { 'ev-click': () => isOpen.set(true) })
 
     const show = Show({
+      myKey: api.keys.sync.id(),
       gathering: msg,
       scuttle: Scuttle(api.sbot.obs.connection),
       blobUrl: api.blob.sync.url,

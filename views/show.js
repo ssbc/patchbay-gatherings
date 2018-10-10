@@ -13,7 +13,8 @@ module.exports = function GatheringShow (opts) {
     blobUrl = i => i,
     markdown = i => i,
     editBtn,
-    updateStream
+    updateStream,
+    myKey
   } = opts
 
   const state = Value()
@@ -32,7 +33,8 @@ module.exports = function GatheringShow (opts) {
       startDateTime,
       image,
       isAttendee,
-      attendees
+      attendees,
+      notAttendees
     } = state
 
     return [
@@ -47,9 +49,14 @@ module.exports = function GatheringShow (opts) {
         location ? [ h('label', 'location'), h('div.location', location) ] : null
       ]),
       h('section.attendance', [
-        // h('label', 'Attendees'),
+        h('div.attendanceButtons', [
+          AttendBtn(isAttendee, attendees),
+          CantAttendBtn(myKey, notAttendees)
+        ]),
+        h('label', `Attending (${attendees.length})`),
         h('div.attendees', attendees.map(avatar)),
-        AttendBtn(isAttendee, attendees)
+        h('label', `Not Attending (${notAttendees.length})`),
+        h('div.notAttendees', notAttendees.map(avatar))
       ])
     ]
   }))
@@ -67,18 +74,36 @@ module.exports = function GatheringShow (opts) {
   function AttendBtn (isAttendee, attendees) {
     return h('button',
       {
-        'disabled': isPublishing,
+        'disabled': computed([isPublishing], isPublishing => isPublishing || isAttendee),
         'className': isAttendee ? '' : '-primary',
         'ev-click': () => {
           isPublishing.set(true)
-          scuttle.attending(gathering.key, !isAttendee, (err, data) => {
+          scuttle.attending(gathering.key, true, (err, data) => {
             if (err) return console.error(err) // TODO display error
 
             refreshState()
           })
         }
       },
-      isAttendee ? 'Unattend' : 'Attend'
+      'Attend'
+    )
+  }
+
+  function CantAttendBtn (myKey, notAttendees) {
+    const isNotAttendee = notAttendees.indexOf(myKey) !== -1
+    return h('button',
+      {
+        'disabled': computed([isPublishing], isPublishing => isPublishing || isNotAttendee),
+        'ev-click': () => {
+          isPublishing.set(true)
+          scuttle.attending(gathering.key, false, (err, data) => {
+            if (err) return console.error(err) // TODO display error
+
+            refreshState()
+          })
+        }
+      },
+      'Can\'t Attend'
     )
   }
   // helpers
