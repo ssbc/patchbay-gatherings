@@ -1,4 +1,4 @@
-const { h, map, resolve } = require('mutant')
+const { h, map } = require('mutant')
 const addSuggest = require('suggest-box')
 
 function Recipients (opts) {

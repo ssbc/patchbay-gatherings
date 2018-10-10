@@ -13,7 +13,8 @@ module.exports = function GatheringShow (opts) {
     blobUrl = i => i,
     markdown = i => i,
     editBtn,
-    updateStream
+    updateStream,
+    myKey
   } = opts
 
   const state = Value()
@@ -50,7 +51,7 @@ module.exports = function GatheringShow (opts) {
       h('section.attendance', [
         h('div.attendanceButtons', [
           AttendBtn(isAttendee, attendees),
-          CantAttendBtn(isAttendee, notAttendees)
+          CantAttendBtn(myKey, notAttendees)
         ]),
         h('label', `Attending (${attendees.length})`),
         h('div.attendees', attendees.map(avatar)),
@@ -88,10 +89,11 @@ module.exports = function GatheringShow (opts) {
     )
   }
 
-  function CantAttendBtn (isAttendee, notAttendees) {
+  function CantAttendBtn (myKey, notAttendees) {
+    const isNotAttendee = notAttendees.indexOf(myKey) !== -1
     return h('button',
       {
-        'disabled': computed([isPublishing], isPublishing => isPublishing || !isAttendee),
+        'disabled': computed([isPublishing], isPublishing => isPublishing || isNotAttendee),
         'ev-click': () => {
           isPublishing.set(true)
           scuttle.attending(gathering.key, false, (err, data) => {
