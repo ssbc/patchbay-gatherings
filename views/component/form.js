@@ -5,6 +5,7 @@ const TimePicker = require('./time-picker')
 const Recipients = require('./recipients')
 const getTimezone = require('../../lib/get-timezone')
 const getTimezoneOffset = require('../../lib/get-timezone-offset')
+const imageString = require('../../lib/image-string')
 
 module.exports = function GatheringForm (opts) {
   const {
@@ -15,7 +16,8 @@ module.exports = function GatheringForm (opts) {
     scuttleBlob,
     blobUrl = () => {},
     suggest,
-    avatar
+    avatar,
+    isEditing = false // only used to bar recps editing
   } = opts
 
   const isValid = computed(state, ({ title, day, time }) => {
@@ -57,17 +59,18 @@ module.exports = function GatheringForm (opts) {
         value: state.description,
         placeholder: '(optional)'
       }),
-      h('label', 'Recipients'),
-      Recipients({ state, myKey, suggest, avatar }),
+      isEditing
+        ? null
+        : [
+          h('label', 'Recipients'),
+          Recipients({ state, myKey, suggest, avatar })
+        ],
       h('label', 'Image'),
       h('div.image-input', [
         imageInput(),
         computed(state.image, image => {
           if (!image) return
-          const link = image.query
-            ? `${image.link}?unbox=${image.query.unbox}`
-            : image.link
-          return h('img', { src: blobUrl(link) })
+          return h('img', { src: blobUrl(imageString(image)) })
         })
       ])
     ]),

@@ -27,7 +27,8 @@ module.exports = function GatheringEdit (opts) {
     onCancel,
     publish,
     scuttleBlob,
-    blobUrl
+    blobUrl,
+    isEditing: true
   })
 
   function fetchCurrentState () {
@@ -59,6 +60,9 @@ module.exports = function GatheringEdit (opts) {
         tz: getTimezone()
       }
     }
+
+    // send an update alert to everyone who's already said they're going
+    if (c.attendees && c.attendees.length) opts.mentions = c.attendees
 
     if (!Object.keys(opts).length) return
 
