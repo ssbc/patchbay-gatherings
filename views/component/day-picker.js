@@ -19,7 +19,7 @@ module.exports = function DayPicker (state) {
         styles: {
           weekFormat: 'rows',
           showNumbers: true,
-          tileRadius: 16,
+          tileRadius: 14,
           tileGap: 8
         }
       })

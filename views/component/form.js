@@ -1,23 +1,30 @@
-const { h, when, computed } = require('mutant')
+const { h, when, computed, resolve } = require('mutant')
+const { parseLink } = require('ssb-ref')
 const DayPicker = require('./day-picker')
 const TimePicker = require('./time-picker')
+const Recipients = require('./recipients')
 const getTimezone = require('../../lib/get-timezone')
 const getTimezoneOffset = require('../../lib/get-timezone-offset')
 
 module.exports = function GatheringForm (opts) {
   const {
     state,
+    myKey,
     onCancel,
     publish,
     scuttleBlob,
-    blobUrl
+    blobUrl = () => {},
+    suggest,
+    avatar
   } = opts
 
   const isValid = computed(state, ({ title, day, time }) => {
     return title && day && time
   })
 
-  return h('GatheringForm', [
+  const isPrivate = computed(state.recps, recps => recps.length > 0)
+
+  return h('GatheringForm', { className: when(isPrivate, '-private') }, [
     h('div.details', [
       h('label.title', 'Title'),
       h('input.title', {
@@ -50,12 +57,17 @@ module.exports = function GatheringForm (opts) {
         value: state.description,
         placeholder: '(optional)'
       }),
+      h('label', 'Recipients'),
+      Recipients({ state, myKey, suggest, avatar }),
       h('label', 'Image'),
       h('div.image-input', [
         imageInput(),
         computed(state.image, image => {
           if (!image) return
-          return h('img', { src: blobUrl(image.link) })
+          const link = image.query
+            ? `${image.link}?unbox=${image.query.unbox}`
+            : image.link
+          return h('img', { src: blobUrl(link) })
         })
       ])
     ]),
@@ -70,6 +82,8 @@ module.exports = function GatheringForm (opts) {
   ])
 
   function imageInput () {
+    // NOTE - clear state.image if person makes gathering private **after** attaching public-flavoured blob
+
     return h('input', {
       type: 'file',
       accept: 'image/*',
@@ -78,18 +92,19 @@ module.exports = function GatheringForm (opts) {
 
     function handleFiles (ev) {
       const files = ev.target.files
-      const opts = {
-        stripExif: true
-        // isPrivate: computed(state.recps => Boolean(recps.length))
-      }
-      scuttleBlob.async.files(files, opts, (err, result) => {
+      const isPrivate = resolve(state.recps).length > 0
+
+      scuttleBlob.async.files(files, { stripExif: true, isPrivate }, (err, result) => {
         ev.target.value = ''
         if (err) {
           console.error(err)
           return
         }
 
-        state.image.set(result)
+        const image = Object.assign(result, parseLink(result.link))
+        // if isPrivate, this ensures link is split out into blob & query
+
+        state.image.set(image)
       })
     }
   }
