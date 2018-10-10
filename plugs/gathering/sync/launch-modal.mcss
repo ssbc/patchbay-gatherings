@@ -1,4 +1,4 @@
-GatheringButton {
+GatheringLaunchModal {
   div.Modal {
     div.content {
       --gradient: linear-gradient(45deg, hsla(0, 100%, 56%, .5), hsla(220, 100%, 46%, 0.3))
@@ -6,7 +6,7 @@ GatheringButton {
       background: var(--texture), var(--gradient)
       background-blend-mode: darken
 
-      padding: 3rem 2rem
+      padding: 2rem 2rem
 
       div.GatheringNew {}
     }

@@ -3,6 +3,7 @@ const spacetime = require('spacetime')
 const pull = require('pull-stream')
 const getTimezone = require('../lib/get-timezone')
 const getTimezoneOffset = require('../lib/get-timezone-offset')
+const imageString = require('../lib/image-string')
 
 module.exports = function GatheringShow (opts) {
   const {
@@ -56,9 +57,9 @@ module.exports = function GatheringShow (opts) {
   function Banner (image) {
     if (!(image && image.link)) return
 
-    const url = blobUrl(image.link)
+    const url = blobUrl(imageString(image))
 
-    return h('section.image', { style: { 'background-image': `url(${url})` } }, [
+    return h('section.image', { style: { 'background-image': `url('${url}')` } }, [
       h('img', { src: url, style: { visibility: 'hidden' } })
     ])
   }

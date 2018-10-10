@@ -1,5 +1,6 @@
 const { h, Value, computed } = require('mutant')
 const spacetime = require('spacetime')
+const imageString = require('../lib/image-string')
 
 module.exports = function gatheringCard (opts) {
   const {
@@ -21,7 +22,7 @@ module.exports = function gatheringCard (opts) {
     if (!state) return 'Loading...' // TODO - make nicer
 
     const { title, description, startDateTime, image } = state
-    const background = image && image.link ? `url(${blobUrl(image.link)})` : ''
+    const background = image && image.link ? `url('${blobUrl(imageString(image))}')` : ''
     var date
     if (startDateTime && startDateTime.epoch) {
       const t = spacetime(startDateTime.epoch)
