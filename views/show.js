@@ -90,7 +90,7 @@ module.exports = function GatheringShow (opts) {
   }
 
   function CantAttendBtn (myKey, notAttendees) {
-    const isNotAttendee = notAttendees.indexOf(myKey) !== -1
+    const isNotAttendee = notAttendees.includes(myKey)
     return h('button',
       {
         'disabled': computed([isPublishing], isPublishing => isPublishing || isNotAttendee),

@@ -4,7 +4,7 @@
   "description": "Plugs patch-gatherings into patchbay",
   "main": "plugs/index.js",
   "scripts": {
-    "test": "echo \"see views folder for *.test.js files\" && exit 1",
+    "test": "echo \"see views folder for *.test.js files\" && standard --fix",
     "lint": "standard --fix"
   },
   "repository": {
