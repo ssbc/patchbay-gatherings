@@ -1,4 +1,4 @@
-> Plugs [patch-gatherings]() into [patchbay]() 
+> Plugs [patch-gatherings](https://github.com/ssbc/patchbay-gatherings) into [patchbay](https://github.com/ssbc/patchbay) 
 
 ## Install
 
