@@ -36,9 +36,9 @@
     "pull-stream": "^3.6.9",
     "read-directory": "^2.1.1",
     "scuttle-blob": "^1.0.2",
-    "scuttle-gathering": "^1.3.4",
+    "scuttle-gathering": "^1.3.5",
     "spacetime": "^4.5.1",
-    "ssb-gathering-schema": "^1.2.3",
+    "ssb-gathering-schema": "^1.2.4",
     "suggest-box": "^2.2.3"
   },
   "devDependencies": {
