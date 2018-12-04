@@ -27,7 +27,7 @@ module.exports = function gatheringCard (opts) {
     if (startDateTime && startDateTime.epoch) {
       const t = spacetime(startDateTime.epoch)
       date = `${t.format('date')} ${t.format('month-short')}`
-      humanReadableDiff = spacetime.now().since(t)
+      humanReadableDiff = spacetime.now().since(t).rounded
     }
 
     return [
@@ -43,7 +43,7 @@ module.exports = function gatheringCard (opts) {
         [
           h('div', [
             date,
-            h('div.humanTime', humanReadableDiff.rounded)
+            h('div.humanTime', humanReadableDiff)
           ])
         ]
       )
