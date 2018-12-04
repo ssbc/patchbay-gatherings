@@ -23,10 +23,11 @@ module.exports = function gatheringCard (opts) {
 
     const { title, description, startDateTime, image } = state
     const background = image && image.link ? `url('${blobUrl(imageString(image))}')` : ''
-    var date
+    var date, humanReadableDiff
     if (startDateTime && startDateTime.epoch) {
       const t = spacetime(startDateTime.epoch)
       date = `${t.format('date')} ${t.format('month-short')}`
+      humanReadableDiff = spacetime.now().since(t)
     }
 
     return [
@@ -40,7 +41,10 @@ module.exports = function gatheringCard (opts) {
           }
         },
         [
-          h('div', date)
+          h('div', [
+            date,
+            h('div.humanTime', humanReadableDiff.rounded)
+          ])
         ]
       )
     ]

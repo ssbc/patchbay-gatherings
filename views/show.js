@@ -46,7 +46,7 @@ module.exports = function GatheringShow (opts) {
       ]),
       h('section.spacetime', [
         startDateTime && startDateTime.epoch ? [ h('label', 'time'), Time(new Date(startDateTime.epoch)) ] : null,
-        location ? [ h('label', 'location'), h('div.location', location) ] : null
+        location ? [ h('label', 'location'), h('div.location', markdown(location)) ] : null
       ]),
       h('section.attendance', [
         h('div.attendanceButtons', [
@@ -120,8 +120,9 @@ module.exports = function GatheringShow (opts) {
 
 function Time (date) {
   const t = spacetime(date)
+
   return h('div.time', [
-    t.format('nice'),
+    t.format('nice-day'),
     h('div.zone', { title: 'timezone' }, [
       getTimezone() || '??',
       h('span', ['(UTC ', getTimezoneOffset(), ')'])
