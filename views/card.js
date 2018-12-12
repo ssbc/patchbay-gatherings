@@ -23,12 +23,14 @@ module.exports = function gatheringCard (opts) {
 
     const { title, description, startDateTime, image } = state
     const background = image && image.link ? `url('${blobUrl(imageString(image))}')` : ''
-    var date, humanReadableDiff
+
+    var date, t
     if (startDateTime && startDateTime.epoch) {
-      const t = spacetime(startDateTime.epoch)
+      t = spacetime(startDateTime.epoch)
       date = `${t.format('date')} ${t.format('month-short')}`
-      humanReadableDiff = spacetime.now().since(t).rounded
     }
+
+    const relativeTimeToEvent = Value(showRelativeTime(t))
 
     return [
       h('div.details', [
@@ -38,15 +40,21 @@ module.exports = function gatheringCard (opts) {
           style: {
             'background-image': background,
             'background-color': color(gathering.key)
-          }
+          },
+          'title': relativeTimeToEvent,
+          'ev-mouseenter': () => relativeTimeToEvent.set(showRelativeTime(t))
         },
         [
-          h('div', [
-            date,
-            h('div.humanTime', humanReadableDiff)
-          ])
+          h('div', date)
         ]
       )
     ]
   }))
+}
+
+function showRelativeTime(t) {
+    if (t) {
+      return spacetime.now().since(t).rounded
+    }
+    return ''
 }
