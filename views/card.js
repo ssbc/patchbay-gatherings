@@ -30,7 +30,7 @@ module.exports = function gatheringCard (opts) {
       date = `${t.format('date')} ${t.format('month-short')}`
     }
 
-    const relativeTimeToEvent = Value(showRelativeTime(t))
+    const relativeTimeToEvent = Value(getRelativeTime(t))
 
     return [
       h('div.details', [
@@ -42,7 +42,7 @@ module.exports = function gatheringCard (opts) {
             'background-color': color(gathering.key)
           },
           'title': relativeTimeToEvent,
-          'ev-mouseenter': () => relativeTimeToEvent.set(showRelativeTime(t))
+          'ev-mouseenter': () => relativeTimeToEvent.set(getRelativeTime(t))
         },
         [
           h('div', date)
@@ -52,9 +52,9 @@ module.exports = function gatheringCard (opts) {
   }))
 }
 
-function showRelativeTime(t) {
-    if (t) {
-      return spacetime.now().since(t).rounded
-    }
-    return ''
+function getRelativeTime (t) {
+  if (t) {
+    return spacetime.now().since(t).rounded
+  }
+  return ''
 }
