@@ -46,7 +46,7 @@ module.exports = function GatheringShow (opts) {
       ]),
       h('section.spacetime', [
         startDateTime && startDateTime.epoch ? [ h('label', 'time'), Time(new Date(startDateTime.epoch)) ] : null,
-        location ? [ h('label', 'location'), h('div.location', location) ] : null
+        location ? [ h('label', 'location'), h('div.location', markdown(location)) ] : null
       ]),
       h('section.attendance', [
         h('div.attendanceButtons', [

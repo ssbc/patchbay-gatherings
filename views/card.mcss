@@ -16,6 +16,9 @@ GatheringCard {
     border-right: none
     padding: 1rem
 
+    max-height: 12rem
+    overflow: hidden
+
     h2 {
       font-size: 1.8rem
       margin-top: 0

@@ -66,6 +66,8 @@ GatheringShow {
     align-content: center
     align-items: center
 
+    (a) { color: #fff }
+
     div {
       font-size: 1.2rem
     }
