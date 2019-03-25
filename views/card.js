@@ -4,11 +4,11 @@ const imageString = require('../lib/image-string')
 
 module.exports = function gatheringCard (opts) {
   const {
-    gathering,
-    scuttle,
-    blobUrl = () => '',
-    markdown = i => i,
-    color = () => `hsl(${Math.random() * 360}, 100%, 70%)`
+    gathering,                                              // Object: gathering Message of form { key, value }
+    scuttle,                                                // Object: instantiated scuttle-gathering helper
+    blobUrl = i => '',                                      // Function: takes BlodId, returns url location for blob
+    markdown = i => i,                                      // Function: takes text, returns rendered markdown
+    color = () => `hsl(${Math.random() * 360}, 100%, 70%)`  // Function: takes gathering key, return valid background-color css
   } = opts
 
   const state = Value()

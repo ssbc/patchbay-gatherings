@@ -5,15 +5,15 @@ const Form = require('./component/form')
 
 module.exports = function GatheringNew (opts) {
   const {
-    initialState,
-    scuttle,
-    scuttleBlob,
-    myKey,
-    blobUrl,
-    avatar,
-    suggest,
-    afterPublish = console.log,
-    onCancel = () => {}
+    initialState, // Object: see /lib/form-state to see options
+    scuttle,      // Object: instantiated scuttle-gathering helper
+    scuttleBlob,  // Object: instantiaged scuttle-blob helper
+    myKey,        // String: FeedId
+    blobUrl,      // Function: takes BlobId, returns Url for getting that blob
+    avatar,       // Function: takes a FeedId, returns an observeable avatar DOM element
+    suggest,      // Object { about: Function } : where about has signature `about(searchTerm, cb)`
+    afterPublish = console.log, // Function: hook, called like afterPublish(data) where data is new gathering
+    onCancel = () => {}         // Function: hook, called like onCancel() when form cancelled
   } = opts
 
   var state = initialiseState(initialState)

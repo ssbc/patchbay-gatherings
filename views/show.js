@@ -7,14 +7,14 @@ const imageString = require('../lib/image-string')
 
 module.exports = function GatheringShow (opts) {
   const {
-    gathering,
-    scuttle,
-    avatar = i => h('div', i),
-    blobUrl = i => i,
-    markdown = i => i,
-    editBtn,
-    updateStream,
-    myKey
+    gathering,                 // String: Message of form { key, value }
+    scuttle,                   // Object: instantiated scuttle-gathering helper
+    avatar = i => h('div', i), // Function: takes FeedId, returns observerable DOM element
+    blobUrl = i => i,          // Function: takes BlodId, returns url location for blob
+    markdown = i => i,         // Function: takes text, returns rendered markdown
+    editBtn,                   // DOM element: a button which can be inserted to trigger some edit action
+    updateStream,              // Source: an optional stream which triggers refresh of view
+    myKey                      // FeedId
   } = opts
 
   const state = Value()
