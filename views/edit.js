@@ -6,14 +6,14 @@ const Form = require('./component/form')
 
 module.exports = function GatheringEdit (opts) {
   const {
-    gathering,
-    scuttle,
-    scuttleBlob,
-    blobUrl,
+    gathering,                   // Object: gathering Message of form { key, value }
+    scuttle,                     // Object: instantiated scuttle-gathering helper
+    scuttleBlob,                 // Object: instantiated scuttle-blob helper
+    blobUrl,                     // Function: takes BlodId, returns url location for blob
     // suggest,
     // avatar,
-    afterPublish = console.log,
-    onCancel = () => {}
+    afterPublish = console.log,  // Function: hook, signature afterPublish(data) where data is new edit data published
+    onCancel = () => {}          // Function: hook, signature onCancel()
   } = opts
 
   var state = {
