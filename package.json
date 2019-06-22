@@ -39,6 +39,7 @@
     "scuttle-gathering": "^1.3.6",
     "spacetime": "^4.5.1",
     "ssb-gathering-schema": "^1.2.4",
+    "ssb-ref": "^2.13.9",
     "suggest-box": "^2.2.3"
   },
   "devDependencies": {
