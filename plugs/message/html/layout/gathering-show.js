@@ -29,11 +29,12 @@ exports.create = (api) => {
     if (!isGathering(msg)) return
 
     // editing modal
-    const form = Value('Loading...')
+    const formContent = Value('Loading...')
+    const form = h('div', formContent)
 
     const isOpen = Value(false)
     watch(isOpen, _isOpen => {
-      if (!_isOpen) form.set('Loading...')
+      if (!_isOpen) formContent.set('Loading...')
       else {
         const loadedForm = Edit({
           gathering: msg,
@@ -45,11 +46,11 @@ exports.create = (api) => {
             isOpen.set(false)
           }
         })
-        form.set(loadedForm)
+        formContent.set(loadedForm)
       }
     })
 
-    const modal = api.app.html.modal(h('div', form), { isOpen })
+    const modal = api.app.html.modal(form, { isOpen })
     const editBtn = h('i.fa.fa-pencil', { 'ev-click': () => isOpen.set(true) })
 
     const show = Show({
