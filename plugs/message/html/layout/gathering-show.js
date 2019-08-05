@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, Value, computed } = require('mutant')
+const { h, Value, watch } = require('mutant')
 const { isGathering } = require('ssb-gathering-schema')
 const Scuttle = require('scuttle-gathering')
 const ScuttleBlob = require('scuttle-blob')
@@ -29,12 +29,13 @@ exports.create = (api) => {
     if (!isGathering(msg)) return
 
     // editing modal
-    const isOpen = Value(false)
+    const form = Value('Loading...')
 
-    const form = h('div', [
-      computed(isOpen, _isOpen => {
-        if (!_isOpen) return 'Loading...'
-        return Edit({
+    const isOpen = Value(false)
+    watch(isOpen, _isOpen => {
+      if (!_isOpen) form.set('Loading...')
+      else {
+        const loadedForm = Edit({
           gathering: msg,
           scuttle: Scuttle(api.sbot.obs.connection),
           scuttleBlob: ScuttleBlob(api.sbot.obs.connection),
@@ -44,10 +45,11 @@ exports.create = (api) => {
             isOpen.set(false)
           }
         })
-      })
-    ])
+        form.set(loadedForm)
+      }
+    })
 
-    const modal = api.app.html.modal(form, { isOpen })
+    const modal = api.app.html.modal(h('div', form), { isOpen })
     const editBtn = h('i.fa.fa-pencil', { 'ev-click': () => isOpen.set(true) })
 
     const show = Show({
