@@ -29,8 +29,8 @@ exports.create = (api) => {
     if (!isGathering(msg)) return
 
     // editing modal
-    const formContent = Value('Loading...')
-    const form = h('div', formContent)
+    const formContainer = h('div')
+    var form
 
     function getEditForm () {
       return Edit({
@@ -47,10 +47,13 @@ exports.create = (api) => {
 
     const isOpen = Value(false)
 
-    const modal = api.app.html.modal(form, {
+    const modal = api.app.html.modal(formContainer, {
       isOpen,
       onOpen: () => {
-        formContent.set(getEditForm())
+        if (form) formContainer.removeChild(form)
+        form = getEditForm()
+
+        formContainer.appendChild(form)
       }
     })
     const editBtn = h('i.fa.fa-pencil', { 'ev-click': () => isOpen.set(true) })
