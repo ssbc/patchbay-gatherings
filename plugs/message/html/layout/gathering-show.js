@@ -1,5 +1,5 @@
 const nest = require('depnest')
-const { h, Value, watch } = require('mutant')
+const { h, Value } = require('mutant')
 const { isGathering } = require('ssb-gathering-schema')
 const Scuttle = require('scuttle-gathering')
 const ScuttleBlob = require('scuttle-blob')
@@ -32,25 +32,27 @@ exports.create = (api) => {
     const formContent = Value('Loading...')
     const form = h('div', formContent)
 
+    function getEditForm () {
+      return Edit({
+        gathering: msg,
+        scuttle: Scuttle(api.sbot.obs.connection),
+        scuttleBlob: ScuttleBlob(api.sbot.obs.connection),
+        blobUrl: api.blob.sync.url,
+        onCancel: () => isOpen.set(false),
+        afterPublish: (msg) => {
+          isOpen.set(false)
+        }
+      })
+    }
+
     const isOpen = Value(false)
-    watch(isOpen, _isOpen => {
-      if (!_isOpen) formContent.set('Loading...')
-      else {
-        const loadedForm = Edit({
-          gathering: msg,
-          scuttle: Scuttle(api.sbot.obs.connection),
-          scuttleBlob: ScuttleBlob(api.sbot.obs.connection),
-          blobUrl: api.blob.sync.url,
-          onCancel: () => isOpen.set(false),
-          afterPublish: (msg) => {
-            isOpen.set(false)
-          }
-        })
-        formContent.set(loadedForm)
+
+    const modal = api.app.html.modal(form, {
+      isOpen,
+      onOpen: () => {
+        formContent.set(getEditForm())
       }
     })
-
-    const modal = api.app.html.modal(form, { isOpen })
     const editBtn = h('i.fa.fa-pencil', { 'ev-click': () => isOpen.set(true) })
 
     const show = Show({
