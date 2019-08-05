@@ -1,6 +1,6 @@
 {
   "name": "patchbay-gatherings",
-  "version": "3.2.16",
+  "version": "3.2.17",
   "description": "Plugs patch-gatherings into patchbay",
   "main": "plugs/index.js",
   "scripts": {
