@@ -38,10 +38,15 @@ GatheringCard {
     justify-content: center
 
     div {
+      text-align:center
       color: #fff
       font-weight: 600
       font-size: 3rem
       text-shadow: rgba(0, 0, 0, 0.46) 0 0 10px
+
+      div.humanTime {
+        font-size: 1.5rem
+      }
     }
   }
 }

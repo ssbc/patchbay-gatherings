@@ -120,8 +120,9 @@ module.exports = function GatheringShow (opts) {
 
 function Time (date) {
   const t = spacetime(date)
+
   return h('div.time', [
-    t.format('nice'),
+    t.format('nice-day'),
     h('div.zone', { title: 'timezone' }, [
       getTimezone() || '??',
       h('span', ['(UTC ', getTimezoneOffset(), ')'])
